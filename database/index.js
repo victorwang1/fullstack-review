@@ -14,10 +14,9 @@ mongoose.connect('mongodb://localhost/fetcher');
 
 let repoSchema = mongoose.Schema({
   // Repo
-  repoId: { type: Number, unique: true },   //data.id
+  repoId: { type: Number, unique: true }, //data.id
   repoName: String, //data.name
-  repoUrl: String,  //data.clone_url
-  repoContent: { fileName: {location: String, content: String} },
+  repoUrl: String,  //html_url
   // Owner
   ownerId: Number,  //data.owner.id
   ownerName: String,//data.owner.login
@@ -27,10 +26,10 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-
 // returns a promise
 let save = (err, repo) => {
   if (err) return console.log(err);
+  console.log()
   console.log(repo);
 }
 

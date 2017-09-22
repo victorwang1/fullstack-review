@@ -15,8 +15,14 @@ class App extends React.Component {
 
   search (term) {
     console.log(`${term} was searched`);
-    // TODO
-    
+
+    // TODO - changed code here
+    return new Promise((resolve, reject) => {
+      $.post("http://localhost:1128/repos", {q: term}, (data, err) => {
+        if (err) reject(err);
+        else resolve(data);
+      })
+    })
   }
 
   render () {
