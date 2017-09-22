@@ -1,16 +1,37 @@
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/fetcher');
 
+///////////////////////
+
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   console.log('>>>>>>>>database connected>>>>>>>>');
+// });
+
+///////////////////////
+
+
 let repoSchema = mongoose.Schema({
-  // TODO: your schema here!
+  // Repo
+  repoId: { type: Number, unique: true },   //data.id
+  repoName: String, //data.name
+  repoUrl: String,  //data.clone_url
+  repoContent: { fileName: {location: String, content: String} },
+  // Owner
+  ownerId: Number,  //data.owner.id
+  ownerName: String,//data.owner.login
+  // Info
+  updated: {type: Date, default: Date.now}
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-let save = (/* TODO */) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
+
+// returns a promise
+let save = (err, repo) => {
+  if (err) return console.log(err);
+  console.log(repo);
 }
 
 module.exports.save = save;
