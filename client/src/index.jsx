@@ -21,7 +21,7 @@ class App extends React.Component {
   load() {
     $.ajax({
       type: 'GET',
-      url: 'http://127.0.0.1:5000',
+      url: 'https://stark-headland-44852.herokuapp.com/',
       dataType: 'text'
     }).done(data => this.setState({ repos: JSON.parse(data)}))
       .fail(err => console.log(err));
@@ -30,9 +30,8 @@ class App extends React.Component {
   search(term) {
     $.ajax({
       type: 'POST',
-      url: 'http://127.0.0.1:5000',
+      url: 'https://stark-headland-44852.herokuapp.com/',
       contentType: 'application/json',
-      dataType: 'json',
       data: JSON.stringify({q: term})
     }).done(data => this.load())
       .fail(err => console.log(err));
