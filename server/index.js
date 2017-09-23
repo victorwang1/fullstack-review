@@ -1,32 +1,34 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const getReposByUsername = requrie('../helpers/github.js').getReposByUsername;
+const getReposByUsername = require('../helpers/github.js').getReposByUsername;
+const save = require('../database/index.js').save;
+const find = require('../database/index.js').find;
 let app = express();
 
-// ??? app.use(bodyParser.json({ type: 'application/*+json' }));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
 app.post('/repos', function (req, res) {
-  console.log(req.body);
-  var githubHandel = req.body;
+  console.log('>>>>>>>>>post request')
+  var githubHandel = req.body.q;
 
   getReposByUsername(githubHandel)
     .then((repos, err) => {
       console.log(repos);
-      respos.forEach((repo) => {
-        //TODO - Save to database;
+      repos.forEach((repo) => {
+        save(repo);
       })
     });
-});
+  res.send();
+})
 
 app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
-});
+  console.log('>>>>>>>>>get request')
+  find().then((repos) => res.send(repos));
+})
 
-let port = 1128;
+let port = 3000;
 
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
-});
+})

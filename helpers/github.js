@@ -10,14 +10,12 @@ let getReposByUsername = (username) => {
   // but you'll have to fill in the URL
 
   let options = {
-    url: 'https://api.github.com/search/repositories',
-    headers: {
-      'User-Agent': 'request',
-      'Authorization': `token ${config.TOKEN}`
-    },
+    url: `https://api.github.com/users/${username}/repos`,
+    qs: { access_token: `${config.TOKEN}` },
+    headers: { 'User-Agent': 'Request-Promise' },
     json: true
   };
-
+  
   return rq(options);
 }
 

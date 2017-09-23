@@ -1,16 +1,7 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher');
-
-///////////////////////
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//   console.log('>>>>>>>>database connected>>>>>>>>');
-// });
-
-///////////////////////
-
+mongoose.connect('mongodb://localhost/fetcher', {
+  useMongoClient: true
+})
 
 let repoSchema = mongoose.Schema({
   // Repo
@@ -26,11 +17,32 @@ let repoSchema = mongoose.Schema({
 
 let Repo = mongoose.model('Repo', repoSchema);
 
-// returns a promise
-let save = (err, repo) => {
-  if (err) return console.log(err);
-  console.log()
-  console.log(repo);
-}
+let pluckData = (data) => {
+  return {
+    repoId: data.id,
+    repoName: data.name,
+    repoUrl: data.html_url,
+    ownerId: data.owner.id,
+    ownerName: data.owner.login,
+  }
+};
+
+//takes in an object and returns promose({object})
+let save = (data) => {
+  console.log(data);
+  repo = pluckData(data);
+  new Repo(repo).save((err, savedRepo) => {
+    console.log('>>>>>>Saved')
+    console.log(savedRepo);
+  })
+};
+
+let find = (q = {}) => {
+  return Repo.find(q)
+             .limit(25)
+             .sort({ updated: -1 });
+};
+
 
 module.exports.save = save;
+module.exports.find = find;

@@ -10,22 +10,34 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
-
   }
 
-  search (term) {
+  componentWillMount() {
+    this.load();
+  }
+
+  load() {
+    $.get("http://localhost:1128/repos", repos => {
+      console.log(repos);
+      this.setState({repos: repos});
+    });
+  }
+
+  search(term) {
     console.log(`${term} was searched`);
 
-    // TODO - changed code here
-    return new Promise((resolve, reject) => {
-      $.post("http://localhost:1128/repos", {q: term}, (data, err) => {
-        if (err) reject(err);
-        else resolve(data);
-      })
-    })
+    $.ajax({
+      type: 'POST',
+      url: 'http://localhost:3000/repos',
+      contentType: 'application/json',
+      dataType: 'json',
+      data: JSON.stringify({q: term})
+    }).done((data) => console.log(data))
+      .fail((err) => console.log(err));
+    // .then(this.load())
   }
 
-  render () {
+  render() {
     return (<div>
       <h1>Github Fetcher</h1>
       <RepoList repos={this.state.repos}/>
