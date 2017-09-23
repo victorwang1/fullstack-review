@@ -23,7 +23,7 @@ let pluckData = (data) => ({
   updated: data.updated_at
 })
 
-let save = (data) => new Repo(pluckData(data)).save();
+let save = (data) => new Repo(pluckData(data)).save().catch(err => err);
 
 let find = (q = {}) => {
   return Repo.find(q)
