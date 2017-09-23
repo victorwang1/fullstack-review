@@ -10,21 +10,19 @@ app.use(express.static(__dirname + '/../client/dist'));
 
 app.post('/repos', function (req, res) {
   console.log('>>>>>>>>>post request')
-  var githubHandel = req.body.q;
 
-  getReposByUsername(githubHandel)
-    .then((repos, err) => {
-      console.log(repos);
-      repos.forEach((repo) => {
-        save(repo);
-      })
-    });
+  getReposByUsername(req.body.q)
+    .then(repos => repos.forEach(repo => save(repo)));
+
   res.send();
 })
 
 app.get('/repos', function (req, res) {
   console.log('>>>>>>>>>get request')
-  find().then((repos) => res.send(repos));
+  find().then(repos => {
+    console.log(repos);
+    res.send(repos)
+  });
 })
 
 let port = 3000;

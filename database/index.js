@@ -32,8 +32,11 @@ let save = (data) => {
   console.log(data);
   repo = pluckData(data);
   new Repo(repo).save((err, savedRepo) => {
-    console.log('>>>>>>Saved')
-    console.log(savedRepo);
+    if (err) console.log('>>>>>>error');
+    else {
+      console.log('>>>>>>Saved');
+      console.log(savedRepo);
+    }
   })
 };
 

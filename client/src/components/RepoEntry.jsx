@@ -9,4 +9,4 @@ const RepoEntry = ({repo}) => (
   </div>
 )
 
-export default RepoList;
+export default RepoEntry;

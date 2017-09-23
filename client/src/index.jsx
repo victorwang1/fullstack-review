@@ -2,7 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import Search from './components/Search.jsx';
+import RepoEntry from './components/RepoEntry.jsx';
 import RepoList from './components/RepoList.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -17,10 +19,16 @@ class App extends React.Component {
   }
 
   load() {
-    $.get("http://localhost:1128/repos", repos => {
-      console.log(repos);
-      this.setState({repos: repos});
-    });
+    // $.get("http://localhost:1128/repos", repos => {
+    //   console.log(repos);
+    //   this.setState({repos: repos});
+    // });
+    $.ajax({
+      type: 'GET',
+      url: 'http://localhost:3000/repos',
+      dataType: 'text'
+    }).done(data => this.setState({ repos: JSON.parse(data)} ))
+      .fail(err => console.log(err));
   }
 
   search(term) {
@@ -32,8 +40,8 @@ class App extends React.Component {
       contentType: 'application/json',
       dataType: 'json',
       data: JSON.stringify({q: term})
-    }).done((data) => console.log(data))
-      .fail((err) => console.log(err));
+    }).done(data => console.log(data))
+      .fail(err => console.log(err));
     // .then(this.load())
   }
 
