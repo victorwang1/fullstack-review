@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/fetcher', {
+mongoose.connect('mongodb://admin:pw@ds147304.mlab.com:47304/heroku_6ncrnm73', {
   useMongoClient: true
 })
 
