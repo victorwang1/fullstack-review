@@ -1,0 +1,21 @@
+body {
+  margin-left: 10px;
+}
+
+.repo {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.repoName {
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.repoName:hover {
+  color: #add8e6;
+}
+
+.repoUrl {
+  text-underline-position: below;
+}

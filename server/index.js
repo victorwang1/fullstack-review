@@ -8,21 +8,15 @@ let app = express();
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../client/dist'));
 
-app.post('/repos', function (req, res) {
-  console.log('>>>>>>>>>post request')
-
+app.post('/repos', (req, res) => {
   getReposByUsername(req.body.q)
-    .then(repos => repos.forEach(repo => save(repo)));
-
-  res.send();
+    .then(repos => Promise.all(repos.map(repo => save(repo)))
+                          .then(() => res.redirect('/repos'))
+                          .catch(err => res.send()));
 })
 
-app.get('/repos', function (req, res) {
-  console.log('>>>>>>>>>get request')
-  find().then(repos => {
-    console.log(repos);
-    res.send(repos)
-  });
+app.get('/repos', (req, res) => {
+  find().then(repos => res.send(repos));
 })
 
 let port = 3000;

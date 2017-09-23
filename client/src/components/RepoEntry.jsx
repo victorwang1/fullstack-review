@@ -1,11 +1,10 @@
 import React from 'react';
 
 const RepoEntry = ({repo}) => (
-  <div>
-    <div>this is a repo entry</div>
-    <div>{repo.repoName}</div>
-    <div>{repo.repoId}</div>
-    <div>{repo.repoUrl}</div>
+  <div className="repo">
+    <a href={repo.repoUrl} className="repoName" onClick="">{repo.repoName}</a>
+    <div className="repoId">{repo.repoId}</div>
+    <div className="ownerName">{repo.ownerName}</div>
   </div>
 )
 

@@ -19,37 +19,30 @@ class App extends React.Component {
   }
 
   load() {
-    // $.get("http://localhost:1128/repos", repos => {
-    //   console.log(repos);
-    //   this.setState({repos: repos});
-    // });
     $.ajax({
       type: 'GET',
       url: 'http://localhost:3000/repos',
       dataType: 'text'
-    }).done(data => this.setState({ repos: JSON.parse(data)} ))
+    }).done(data => this.setState({ repos: JSON.parse(data)}))
       .fail(err => console.log(err));
   }
 
   search(term) {
-    console.log(`${term} was searched`);
-
     $.ajax({
       type: 'POST',
       url: 'http://localhost:3000/repos',
       contentType: 'application/json',
       dataType: 'json',
       data: JSON.stringify({q: term})
-    }).done(data => console.log(data))
+    }).done(data => this.load())
       .fail(err => console.log(err));
-    // .then(this.load())
   }
 
   render() {
     return (<div>
       <h1>Github Fetcher</h1>
-      <RepoList repos={this.state.repos}/>
       <Search onSearch={this.search.bind(this)}/>
+      <RepoList repos={this.state.repos}/>
     </div>)
   }
 }
