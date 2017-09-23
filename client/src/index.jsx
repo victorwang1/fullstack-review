@@ -21,7 +21,7 @@ class App extends React.Component {
   load() {
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:5000/repos',
+      url: 'http://127.0.0.1:5000',
       dataType: 'text'
     }).done(data => this.setState({ repos: JSON.parse(data)}))
       .fail(err => console.log(err));
@@ -30,7 +30,7 @@ class App extends React.Component {
   search(term) {
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:5000/repos',
+      url: 'http://127.0.0.1:5000',
       contentType: 'application/json',
       dataType: 'json',
       data: JSON.stringify({q: term})
