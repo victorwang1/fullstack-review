@@ -9,7 +9,7 @@ let repoSchema = mongoose.Schema({
   repoUrl: String,
   ownerId: Number,
   ownerName: String,
-  updated: { type: Date, default: Date.now }
+  updated: Date
 });
 
 let Repo = mongoose.model('Repo', repoSchema);
@@ -20,9 +20,10 @@ let pluckData = (data) => ({
   repoUrl: data.html_url,
   ownerId: data.owner.id,
   ownerName: data.owner.login,
+  updated: data.updated_at
 })
 
-let save = (data) => new Repo(pluckData(data)).save(err => err);
+let save = (data) => new Repo(pluckData(data)).save();
 
 let find = (q = {}) => {
   return Repo.find(q)

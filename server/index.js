@@ -11,8 +11,7 @@ app.use(express.static(__dirname + '/../client/dist'));
 app.post('/repos', (req, res) => {
   getReposByUsername(req.body.q)
     .then(repos => Promise.all(repos.map(repo => save(repo)))
-                          .then(() => res.redirect('/repos'))
-                          .catch(err => res.send()));
+                          .then(() => res.redirect('/repos')));
 })
 
 app.get('/repos', (req, res) => {
