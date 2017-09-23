@@ -21,7 +21,7 @@ class App extends React.Component {
   load() {
     $.ajax({
       type: 'GET',
-      url: 'https://stark-headland-44852.herokuapp.com/',
+      url: 'https://stark-headland-44852.herokuapp.com/repos',
       dataType: 'text'
     }).done(data => this.setState({ repos: JSON.parse(data)}))
       .fail(err => console.log(err));
@@ -30,7 +30,7 @@ class App extends React.Component {
   search(term) {
     $.ajax({
       type: 'POST',
-      url: 'https://stark-headland-44852.herokuapp.com/',
+      url: 'https://stark-headland-44852.herokuapp.com/repos',
       contentType: 'application/json',
       dataType: 'json',
       data: JSON.stringify({q: term})
