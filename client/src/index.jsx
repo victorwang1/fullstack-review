@@ -32,7 +32,6 @@ class App extends React.Component {
       type: 'POST',
       url: 'https://stark-headland-44852.herokuapp.com/repos',
       contentType: 'application/json',
-      dataType: 'json',
       data: JSON.stringify({q: term})
     }).done(data => this.load())
       .fail(err => console.log(err));
